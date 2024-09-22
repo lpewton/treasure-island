@@ -22,8 +22,13 @@ for (var i = 0; i < 12; i++) {
     };
 };
 
+var initialCell = document.getElementById('cell-00');
+initialCell.innerHTML = 'O';
 
+const rBtn = document.getElementById('r-btn');
 
-centerCell.innerHTML = 'X';
+$('#r-btn').on('click', function() {
+    console.log('Hi')
+})
 
-console.log(centerCell)
+var loc = '00';
