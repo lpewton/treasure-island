@@ -47,18 +47,22 @@ const updateLoc = () => {
 
 const revealNewLoc = () => {
     var revealedCell = document.getElementById(`cell-${currentLoc}`);
+    console.log(revealedCell)
     revealedCell.innerHTML = 'O';
-    revealedCell.classList = 'bg-success';
+    revealedCell.classList = 'px-3 bg-success';
+    if (revealedCell.id === groundCell) {
+        alert('You Won! Congrats!')
+    }
 };
 
 const resetOldLoc = () => {
-    console.log('Working')
     var oldCell = document.getElementById(`cell-${currentLoc}`);
     oldCell.classList.remove('bg-success')
-}
+};
+
+var groundCell = 'cell-' + getRandom() + '.' + getRandom();
 
 const createGrid = () => {
-    var groundCell = 'cell-' + getRandom() + '.' + getRandom();
     for (var i = 0; i < 12; i++) {
         var row = grid.insertRow();
         row.setAttribute('id', `row-${i}`);
@@ -66,11 +70,9 @@ const createGrid = () => {
             var cell = row.insertCell();
             cell.setAttribute('id', `cell-${i}.${j}`);
             cell.classList = 'px-3';
-            if (cell.id === groundCell) {
-                var cellText = document.createTextNode('G');
-            } else {
+            
                 var cellText = document.createTextNode('x');
-            }
+            
             cell.append(cellText);
         };
         var initialCell = document.getElementById('cell-0.0');
@@ -79,8 +81,8 @@ const createGrid = () => {
 };
 
 $('#u-btn').on('click', function () {
-    updateLoc();
     locRow -= 1;
+    updateLoc();
 });
 
 $('#d-btn').on('click', function () {
