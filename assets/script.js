@@ -39,6 +39,7 @@ const updateBtns = () => {
 };
 
 const updateLoc = () => {
+    resetOldLoc();
     currentLoc = locRow.toString() + '.' + locCell.toString();
     revealNewLoc();
     updateBtns();
@@ -46,8 +47,15 @@ const updateLoc = () => {
 
 const revealNewLoc = () => {
     var revealedCell = document.getElementById(`cell-${currentLoc}`);
-    revealedCell.innerHTML = 'O'
+    revealedCell.innerHTML = 'O';
+    revealedCell.classList = 'bg-success';
 };
+
+const resetOldLoc = () => {
+    console.log('Working')
+    var oldCell = document.getElementById(`cell-${currentLoc}`);
+    oldCell.classList.remove('bg-success')
+}
 
 const createGrid = () => {
     var groundCell = 'cell-' + getRandom() + '.' + getRandom();
