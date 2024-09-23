@@ -3,9 +3,12 @@ var currentLoc = '0.0';
 var locRow = 0;
 var locCell = 0;
 var score = 0;
+var level = 1;
+var difficulty = level * 3;
+var limit = level * 6;
 
 const getRandom = () => {
-    return Math.floor(Math.random() * 12);
+    return Math.floor(Math.random() * difficulty);
 };
 
 const updateBtns = () => {
@@ -20,7 +23,7 @@ const updateBtns = () => {
         document.getElementById('ul-btn').disabled = true;
     };
 
-    if (locRow === 11) {
+    if (locRow === (difficulty - 1)) {
         document.getElementById('d-btn').disabled = true;
         document.getElementById('dr-btn').disabled = true;
         document.getElementById('dl-btn').disabled = true;
@@ -32,7 +35,7 @@ const updateBtns = () => {
         document.getElementById('ul-btn').disabled = true;
     };
 
-    if (locCell === 11) {
+    if (locCell === (difficulty - 1)) {
         document.getElementById('r-btn').disabled = true;
         document.getElementById('dr-btn').disabled = true;
         document.getElementById('ur-btn').disabled = true;
@@ -49,11 +52,15 @@ const updateLoc = () => {
 const revealNewLoc = () => {
     var revealedCell = document.getElementById(`cell-${currentLoc}`);
     revealedCell.innerHTML = 'O';
-    revealedCell.classList = 'px-3 bg-success';
+    revealedCell.classList = 'px-2 bg-success';
     score += 1;
     document.getElementById('score').innerHTML = score;
     if (revealedCell.id === groundCell) {
-        alert(`You Won! Congrats! Your score was ${score}.`)
+        // alert(`You Won! Congrats! Your score was ${score}.`);
+        level += 1;
+        difficulty = level * 4;
+        document.getElementById('gameGrid').innerHTML = '';
+        createGrid();
     };
 };
 
@@ -65,21 +72,20 @@ const resetOldLoc = () => {
 var groundCell = 'cell-' + getRandom() + '.' + getRandom();
 
 const createGrid = () => {
-    for (var i = 0; i < 12; i++) {
+    for (var i = 0; i < difficulty; i++) {
         var row = grid.insertRow();
         row.setAttribute('id', `row-${i}`);
-        for (var j = 0; j < 12; j++) {
+        for (var j = 0; j < difficulty; j++) {
             var cell = row.insertCell();
             cell.setAttribute('id', `cell-${i}.${j}`);
-            cell.classList = 'px-3';
-            
-                var cellText = document.createTextNode('x');
-            
+            cell.classList = 'px-2';
+            var cellText = document.createTextNode('X');
             cell.append(cellText);
         };
         var initialCell = document.getElementById('cell-0.0');
         initialCell.innerHTML = 'O';
     };
+    document.getElementById('limit').innerHTML = limit;
 };
 
 $('#u-btn').on('click', function () {
