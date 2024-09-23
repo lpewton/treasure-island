@@ -2,6 +2,7 @@ var grid = document.getElementById('gameGrid')
 var currentLoc = '0.0';
 var locRow = 0;
 var locCell = 0;
+var score = 0;
 
 const getRandom = () => {
     return Math.floor(Math.random() * 12);
@@ -47,12 +48,13 @@ const updateLoc = () => {
 
 const revealNewLoc = () => {
     var revealedCell = document.getElementById(`cell-${currentLoc}`);
-    console.log(revealedCell)
     revealedCell.innerHTML = 'O';
     revealedCell.classList = 'px-3 bg-success';
+    score += 1;
+    document.getElementById('score').innerHTML = score;
     if (revealedCell.id === groundCell) {
-        alert('You Won! Congrats!')
-    }
+        alert(`You Won! Congrats! Your score was ${score}.`)
+    };
 };
 
 const resetOldLoc = () => {
