@@ -11,18 +11,27 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container d-flex justify-content-center mt-3">
         <table id="gameGrid">
         </table>
     </div>
-    <button id="u-btn" class="directionBtn">U</button>
-    <button id="d-btn" class="directionBtn">D</button>
-    <button id="r-btn" class="directionBtn">R</button>
-    <button id="l-btn" class="directionBtn">L</button>
-    <button id="ul-btn" class="directionBtn">UL</button>
-    <button id="ur-btn" class="directionBtn">UR</button>
-    <button id="dl-btn" class="directionBtn">DL</button>
-    <button id="dr-btn" class="directionBtn">DR</button>
+    <div class="container direction-btns mt-3">
+        <div class="d-flex justify-content-center">
+            <button id="ul-btn" class="directionBtn col-1 bg-dark text-light">↖</button>
+            <button id="u-btn" class="directionBtn col-1 bg-warning">↑</button>
+            <button id="ur-btn" class="directionBtn col-1 bg-dark text-light">↗</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button id="l-btn" class="directionBtn col-1 bg-warning">←</button>
+            <div id="score" class="col-1"></div>
+            <button id="r-btn" class="directionBtn col-1 bg-warning">→</button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button id="dl-btn" class="directionBtn col-1 bg-dark text-light">↙</button>
+            <button id="d-btn" class="directionBtn col-1 bg-warning">↓</button>
+        <button id="dr-btn" class="directionBtn col-1 bg-dark text-light">↘</button>
+    </div>
+    </div>
 
     <!-- JQuery -->
     <script src="./node_modules/jquery/dist/jquery.js"></script>
