@@ -56,11 +56,11 @@ const revealNewLoc = () => {
     score += 1;
     document.getElementById('score').innerHTML = score;
     if (revealedCell.id === groundCell) {
-        // alert(`You Won! Congrats! Your score was ${score}.`);
         level += 1;
         difficulty = level * 4;
         document.getElementById('gameGrid').innerHTML = '';
-        createGrid();
+        document.getElementById('successBtn').click();
+            createGrid();
     };
 };
 
@@ -69,9 +69,17 @@ const resetOldLoc = () => {
     oldCell.classList.remove('bg-success')
 };
 
-var groundCell = 'cell-' + getRandom() + '.' + getRandom();
+const createGroundCell = () => {
+    groundCell = 'cell-' + getRandom() + '.' + getRandom();
+    if (groundCell === 'cell-0.0') {
+        return createGroundCell();
+    } else {
+    return groundCell;
+    }
+}
 
 const createGrid = () => {
+    var groundCell = createGroundCell();
     for (var i = 0; i < difficulty; i++) {
         var row = grid.insertRow();
         row.setAttribute('id', `row-${i}`);
@@ -79,7 +87,12 @@ const createGrid = () => {
             var cell = row.insertCell();
             cell.setAttribute('id', `cell-${i}.${j}`);
             cell.classList = 'px-2';
-            var cellText = document.createTextNode('X');
+            if (cell.id === groundCell) {
+                var cellText = document.createTextNode('G');
+                console.log(cell.id)
+            } else {
+                var cellText = document.createTextNode('X');
+            }
             cell.append(cellText);
         };
         var initialCell = document.getElementById('cell-0.0');
