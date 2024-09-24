@@ -4,11 +4,46 @@ var locRow = 0;
 var locCell = 0;
 var score = 0;
 var level = 1;
-var difficulty = level * 3;
+var difficulty = 3;
 var limit = level * 6;
 
+// Functions
 const getRandom = () => {
     return Math.floor(Math.random() * difficulty);
+};
+
+const createGroundCell = () => {
+    groundCell = 'cell-' + getRandom() + '.' + getRandom();
+    if (groundCell === 'cell-0.0') {
+        return createGroundCell();
+    } else {
+        return groundCell;
+    }
+};
+
+const createGrid = () => {
+    grid.innerHTML = '';
+    var groundCell = createGroundCell();
+    for (var i = 0; i < difficulty; i++) {
+        var row = grid.insertRow();
+        row.setAttribute('id', `row-${i}`);
+        for (var j = 0; j < difficulty; j++) {
+            var cell = row.insertCell();
+            cell.setAttribute('id', `cell-${i}.${j}`);
+            cell.classList = 'px-2';
+            // if (cell.id === groundCell) {
+                // var cellText = document.createTextNode('G');
+            // } else {
+                var cellText = document.createTextNode('X');
+            // }
+            cell.append(cellText);
+        };
+        var initialCell = document.getElementById('cell-0.0');
+        initialCell.innerHTML = 'O';
+        initialCell.classList = 'bg-success text-center';
+        currentLoc = '0.0';
+    };
+    document.getElementById('limit').innerHTML = limit;
 };
 
 const updateBtns = () => {
@@ -42,6 +77,48 @@ const updateBtns = () => {
     };
 };
 
+const resetOldLoc = () => {
+    var oldCell = document.getElementById(`cell-${currentLoc}`);
+    oldCell.classList.remove('bg-success')
+};
+
+const levelCleared = () => {
+    level += 1;
+    document.getElementById('level').innerHTML = level;
+    limit += 3;
+    score = 0;
+    document.getElementById('score').innerHTML = score;
+    difficulty = level + 2;
+    locRow = 0;
+    locCell = 0;
+    revealedCell = document.getElementById(`cell-${currentLoc}`);
+    createGrid();
+};
+
+const revealNewLoc = () => {
+    var revealedCell = document.getElementById(`cell-${currentLoc}`);
+    revealedCell.innerHTML = 'O';
+    revealedCell.classList = 'px-2 bg-success';
+    if (score === (limit - 1)) {
+        locRow = 0;
+        locCell = 0;
+        score = 0;
+        level = 1;
+        difficulty = 3;
+        limit = level * 6;
+    document.getElementById('level').innerHTML = level;
+        createGrid();
+        updateBtns();
+        document.getElementById('defeatBtn').click();
+    } else {
+    score += 1;
+}
+document.getElementById('score').innerHTML = score;
+    if (revealedCell.id === groundCell) {
+        levelCleared();
+    };
+};
+
 const updateLoc = () => {
     resetOldLoc();
     currentLoc = locRow.toString() + '.' + locCell.toString();
@@ -49,58 +126,7 @@ const updateLoc = () => {
     updateBtns();
 };
 
-const revealNewLoc = () => {
-    var revealedCell = document.getElementById(`cell-${currentLoc}`);
-    revealedCell.innerHTML = 'O';
-    revealedCell.classList = 'px-2 bg-success';
-    score += 1;
-    document.getElementById('score').innerHTML = score;
-    if (revealedCell.id === groundCell) {
-        level += 1;
-        difficulty = level * 4;
-        document.getElementById('gameGrid').innerHTML = '';
-        document.getElementById('successBtn').click();
-            createGrid();
-    };
-};
-
-const resetOldLoc = () => {
-    var oldCell = document.getElementById(`cell-${currentLoc}`);
-    oldCell.classList.remove('bg-success')
-};
-
-const createGroundCell = () => {
-    groundCell = 'cell-' + getRandom() + '.' + getRandom();
-    if (groundCell === 'cell-0.0') {
-        return createGroundCell();
-    } else {
-    return groundCell;
-    }
-}
-
-const createGrid = () => {
-    var groundCell = createGroundCell();
-    for (var i = 0; i < difficulty; i++) {
-        var row = grid.insertRow();
-        row.setAttribute('id', `row-${i}`);
-        for (var j = 0; j < difficulty; j++) {
-            var cell = row.insertCell();
-            cell.setAttribute('id', `cell-${i}.${j}`);
-            cell.classList = 'px-2';
-            if (cell.id === groundCell) {
-                var cellText = document.createTextNode('G');
-                console.log(cell.id)
-            } else {
-                var cellText = document.createTextNode('X');
-            }
-            cell.append(cellText);
-        };
-        var initialCell = document.getElementById('cell-0.0');
-        initialCell.innerHTML = 'O';
-    };
-    document.getElementById('limit').innerHTML = limit;
-};
-
+// Buttons
 $('#u-btn').on('click', function () {
     locRow -= 1;
     updateLoc();
@@ -145,5 +171,6 @@ $('#dl-btn').on('click', function () {
     updateLoc();
 });
 
+// Initialise
 createGrid();
 updateBtns();

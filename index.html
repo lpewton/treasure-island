@@ -38,26 +38,26 @@
         </div>
         <div class="info">
             <p>Score: <span id="score">0</span></p>
-            <p>Level: <span id="score">1</span></p>
+            <p>Level: <span id="level">1</span></p>
         </div>
     </div>
 
     <!-- Button trigger modal -->
-    <button id="successBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#successModal" hidden>
+    <button id="defeatBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#defeatModal" hidden>
     </button>
 
     <!-- Success Modal -->
-    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="defeatModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Level Cleared!</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="exampleModalLabel">You lose!</h5>
                 </div>
                 <div class="modal-body">
+                    <p>You passed the limit...</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue</button>
+                    <button type="button" id="restart-btn" class="btn btn-secondary" data-bs-dismiss="modal">Restart</button>
                 </div>
             </div>
         </div>
