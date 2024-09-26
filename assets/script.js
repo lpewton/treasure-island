@@ -13,12 +13,10 @@ const getRandom = () => {
 };
 
 const createGroundCell = () => {
-    groundCell = 'cell-' + getRandom() + '.' + getRandom();
-    if (groundCell === 'cell-0.0') {
-        return createGroundCell();
-    } else {
-        return groundCell;
-    }
+    do {
+        groundCell = 'cell-' + getRandom() + '.' + getRandom();
+    } while (groundCell === 'cell-0.0')
+    return groundCell;
 };
 
 const createGrid = () => {
@@ -30,19 +28,22 @@ const createGrid = () => {
         for (var j = 0; j < difficulty; j++) {
             var cell = row.insertCell();
             cell.setAttribute('id', `cell-${i}.${j}`);
-            cell.classList = 'px-2';
-            // if (cell.id === groundCell) {
-                // var cellText = document.createTextNode('G');
-            // } else {
+            cell.classList = 'px-2 rounded-circle';
+            if (cell.id === groundCell) {
+                var cellText = document.createTextNode('G');
+            } else {
                 var cellText = document.createTextNode('X');
-            // }
+            }
             cell.append(cellText);
         };
-        var initialCell = document.getElementById('cell-0.0');
-        initialCell.innerHTML = 'O';
-        initialCell.classList = 'bg-success text-center';
-        currentLoc = '0.0';
     };
+    var initialCell = document.getElementById('cell-0.0');
+    initialCell.innerHTML = '<i class="fa-solid fa-sailboat"></i>';
+    initialCell.classList = 'bg-success text-center rounded-circle';
+    currentLoc = '0.0';
+    locRow = 0;
+    locCell = 0;
+    document.getElementById('level').innerHTML = level;
     document.getElementById('limit').innerHTML = limit;
 };
 
@@ -79,41 +80,40 @@ const updateBtns = () => {
 
 const resetOldLoc = () => {
     var oldCell = document.getElementById(`cell-${currentLoc}`);
+    oldCell.innerHTML = 'O';
     oldCell.classList.remove('bg-success')
 };
 
 const levelCleared = () => {
     level += 1;
-    document.getElementById('level').innerHTML = level;
     limit += 3;
     score = 0;
     document.getElementById('score').innerHTML = score;
     difficulty = level + 2;
-    locRow = 0;
-    locCell = 0;
     revealedCell = document.getElementById(`cell-${currentLoc}`);
     createGrid();
 };
 
+const restartGame = () => {
+    score = 0;
+    level = 1;
+    difficulty = 3;
+    limit = level * 6;
+    createGrid();
+    updateBtns();
+    document.getElementById('defeatBtn').click();
+}
+
 const revealNewLoc = () => {
     var revealedCell = document.getElementById(`cell-${currentLoc}`);
-    revealedCell.innerHTML = 'O';
-    revealedCell.classList = 'px-2 bg-success';
+    revealedCell.innerHTML = '<i class="fa-solid fa-sailboat"></i>';
+    revealedCell.classList = 'px-2 bg-success rounded-circle';
     if (score === (limit - 1)) {
-        locRow = 0;
-        locCell = 0;
-        score = 0;
-        level = 1;
-        difficulty = 3;
-        limit = level * 6;
-    document.getElementById('level').innerHTML = level;
-        createGrid();
-        updateBtns();
-        document.getElementById('defeatBtn').click();
+        restartGame();
     } else {
-    score += 1;
-}
-document.getElementById('score').innerHTML = score;
+        score += 1;
+    }
+    document.getElementById('score').innerHTML = score;
     if (revealedCell.id === groundCell) {
         levelCleared();
     };
