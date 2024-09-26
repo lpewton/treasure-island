@@ -22,6 +22,9 @@ const createGroundCell = () => {
 const createGrid = () => {
     grid.innerHTML = '';
     var groundCell = createGroundCell();
+    var tbody = document.createElement('tbody');
+    tbody.classList = 'p-3';
+    grid.appendChild(tbody);
     for (var i = 0; i < difficulty; i++) {
         var row = grid.insertRow();
         row.setAttribute('id', `row-${i}`);
@@ -29,14 +32,16 @@ const createGrid = () => {
             var cell = row.insertCell();
             cell.setAttribute('id', `cell-${i}.${j}`);
             cell.classList = 'px-2 rounded-circle';
-            if (cell.id === groundCell) {
-                var cellText = document.createTextNode('G');
-            } else {
+            // if (cell.id === groundCell) {
+            //     var cellText = document.createTextNode('G');
+            // } else {
                 var cellText = document.createTextNode('X');
-            }
+            // }
             cell.append(cellText);
         };
     };
+    var tbody = document.getElementsByTagName('tbody');
+    tbody.classList = 'p-3';
     var initialCell = document.getElementById('cell-0.0');
     initialCell.innerHTML = '<i class="fa-solid fa-sailboat"></i>';
     initialCell.classList = 'bg-success text-center rounded-circle';
@@ -91,6 +96,14 @@ const levelCleared = () => {
     document.getElementById('score').innerHTML = score;
     difficulty = level + 2;
     revealedCell = document.getElementById(`cell-${currentLoc}`);
+    document.getElementById('main-div').classList = 'd-none';
+    document.getElementById('levelpassed').classList = 'bg-dark d-block vh-100 d-flex justify-content-center align-items-center';
+
+    setTimeout(() => {
+    document.getElementById('main-div').classList = 'container';
+    document.getElementById('levelpassed').classList = 'd-none';
+    }, 1500);
+
     createGrid();
 };
 
@@ -107,7 +120,7 @@ const restartGame = () => {
 const revealNewLoc = () => {
     var revealedCell = document.getElementById(`cell-${currentLoc}`);
     revealedCell.innerHTML = '<i class="fa-solid fa-sailboat"></i>';
-    revealedCell.classList = 'px-2 bg-success rounded-circle';
+    revealedCell.classList = 'px-1 bg-success rounded-circle';
     if (score === (limit - 1)) {
         restartGame();
     } else {
@@ -120,18 +133,39 @@ const revealNewLoc = () => {
 };
 
 const updateLoc = () => {
+    try {
     resetOldLoc();
     currentLoc = locRow.toString() + '.' + locCell.toString();
     revealNewLoc();
     updateBtns();
+    } catch (error) {
+        console.log(oldCell)
+    }
 };
 
-// Buttons
+// Directions and Buttons
+// document.addEventListener('keydown', function(event) {
+//     switch (event.key) {
+//         case 'ArrowUp':
+//             locRow -= 1;
+//             break;
+//         case 'ArrowDown':
+//             locRow += 1;
+//             break;
+//         case 'ArrowRight':
+//             locCell += 1;
+//             break;
+//         case 'ArrowLeft':
+//             locCell -= 1;
+//             break;
+//     }
+//     updateLoc();
+//     })
+
 $('#u-btn').on('click', function () {
     locRow -= 1;
     updateLoc();
 });
-
 $('#d-btn').on('click', function () {
     locRow += 1;
     updateLoc();
