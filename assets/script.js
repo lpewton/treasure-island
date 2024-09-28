@@ -105,7 +105,7 @@ const levelCleared = () => {
     difficulty = level + 2;
     revealedCell = document.getElementById(`cell-${currentLoc}`);
     document.getElementById('main-div').classList = 'd-none';
-    document.getElementById('levelpassed').classList = 'bg-dark d-block vh-100 d-flex justify-content-center align-items-center';
+    document.getElementById('levelpassed').classList = 'd-block vh-100 d-flex"';
 
     setTimeout(() => {
         document.getElementById('main-div').classList = 'container';
