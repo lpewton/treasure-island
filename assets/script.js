@@ -93,6 +93,7 @@ const updateBtns = () => {
 const resetOldLoc = () => {
     var oldCell = document.getElementById(`cell-${currentLoc}`);
     oldCell.innerHTML = 'O';
+    cellVals[oldCell.id] = 0;
     oldCell.classList.remove('bg-success')
 };
 
