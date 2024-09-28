@@ -92,8 +92,8 @@ const updateBtns = () => {
 
 const resetOldLoc = () => {
     var oldCell = document.getElementById(`cell-${currentLoc}`);
-    oldCell.innerHTML = 'O';
-    cellVals[oldCell.id] = 0;
+    cellVals[oldCell.id] = '<i class="fa-solid fa-sailboat"></i>';
+    oldCell.classList = 'text-black-50 text-seondary'
     oldCell.classList.remove('bg-success')
 };
 
@@ -127,7 +127,7 @@ const restartGame = () => {
 const revealNewLoc = () => {
     var revealedCell = document.getElementById(`cell-${currentLoc}`);
     revealedCell.innerHTML = '<i class="fa-solid fa-sailboat"></i>';
-    revealedCell.classList = 'px-1 bg-success rounded-circle';
+    revealedCell.classList = 'px-1 bg-succes rounded-circle';
 
     if (document.getElementById(`cell-${locRow}.${locCell + 1}`)) {
         rCellText = `cell-${locRow}.${locCell + 1}`;
