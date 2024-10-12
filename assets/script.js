@@ -122,54 +122,57 @@ const restartGame = () => {
     createGrid();
     updateBtns();
     document.getElementById('defeatBtn').click();
-}
+};
 
 const revealNewLoc = () => {
     var revealedCell = document.getElementById(`cell-${currentLoc}`);
     revealedCell.innerHTML = '<i class="fa-solid fa-sailboat"></i>';
     revealedCell.classList = 'px-1 bg-succes rounded-circle';
+    const fixedPercentage = (cellVals[revealedCell.id] - difficulty) * -1;
+    const percentage = fixedPercentage * 255 / difficulty;
+    grid.style.backgroundColor = `rgba(${percentage}, ${percentage}, 0)`;
 
-    if (document.getElementById(`cell-${locRow}.${locCell + 1}`)) {
-        rCellText = `cell-${locRow}.${locCell + 1}`;
-        var rCell = document.getElementById(rCellText);
-        rCell.innerHTML = cellVals[rCellText];
-    };
-    if (document.getElementById(`cell-${locRow}.${locCell - 1}`)) {
-        lCellText = `cell-${locRow}.${locCell - 1}`;
-        var lCell = document.getElementById(lCellText);
-        lCell.innerHTML = cellVals[lCellText];
-    };
-    if (document.getElementById(`cell-${locRow + 1}.${locCell}`)) {
-        uCellText = `cell-${locRow + 1}.${locCell}`;
-        var uCell = document.getElementById(uCellText);
-        uCell.innerHTML = cellVals[uCellText];
-    };
-    if (document.getElementById(`cell-${locRow - 1}.${locCell}`)) {
-        dCellText = `cell-${locRow - 1}.${locCell}`;
-        var dCell = document.getElementById(dCellText);
-        dCell.innerHTML = cellVals[dCellText];
-    };
+    // if (document.getElementById(`cell-${locRow}.${locCell + 1}`)) {
+    //     rCellText = `cell-${locRow}.${locCell + 1}`;
+    //     var rCell = document.getElementById(rCellText);
+    //     rCell.innerHTML = cellVals[rCellText];
+    // };
+    // if (document.getElementById(`cell-${locRow}.${locCell - 1}`)) {
+    //     lCellText = `cell-${locRow}.${locCell - 1}`;
+    //     var lCell = document.getElementById(lCellText);
+    //     lCell.innerHTML = cellVals[lCellText];
+    // };
+    // if (document.getElementById(`cell-${locRow + 1}.${locCell}`)) {
+    //     uCellText = `cell-${locRow + 1}.${locCell}`;
+    //     var uCell = document.getElementById(uCellText);
+    //     uCell.innerHTML = cellVals[uCellText];
+    // };
+    // if (document.getElementById(`cell-${locRow - 1}.${locCell}`)) {
+    //     dCellText = `cell-${locRow - 1}.${locCell}`;
+    //     var dCell = document.getElementById(dCellText);
+    //     dCell.innerHTML = cellVals[dCellText];
+    // };
 
-    if (document.getElementById(`cell-${locRow - 1}.${locCell - 1}`)) {
-        ulCellText = `cell-${locRow - 1}.${locCell - 1}`;
-        var ulCell = document.getElementById(ulCellText);
-        ulCell.innerHTML = cellVals[ulCellText];
-    };
-    if (document.getElementById(`cell-${locRow - 1}.${locCell + 1}`)) {
-        urCellText = `cell-${locRow - 1}.${locCell + 1}`;
-        var urCell = document.getElementById(urCellText);
-        urCell.innerHTML = cellVals[urCellText];
-    };
-    if (document.getElementById(`cell-${locRow + 1}.${locCell - 1}`)) {
-        dlCellText = `cell-${locRow - 1 * -1}.${locCell - 1}`;
-        var dlCell = document.getElementById(dlCellText);
-        dlCell.innerHTML = cellVals[dlCellText];
-    };
-    if (document.getElementById(`cell-${locRow + 1}.${locCell + 1}`)) {
-        drCellText = `cell-${locRow - 1 * -1}.${locCell + 1}`;
-        var drCell = document.getElementById(drCellText);
-        drCell.innerHTML = cellVals[drCellText];
-    };
+    // if (document.getElementById(`cell-${locRow - 1}.${locCell - 1}`)) {
+    //     ulCellText = `cell-${locRow - 1}.${locCell - 1}`;
+    //     var ulCell = document.getElementById(ulCellText);
+    //     ulCell.innerHTML = cellVals[ulCellText];
+    // };
+    // if (document.getElementById(`cell-${locRow - 1}.${locCell + 1}`)) {
+    //     urCellText = `cell-${locRow - 1}.${locCell + 1}`;
+    //     var urCell = document.getElementById(urCellText);
+    //     urCell.innerHTML = cellVals[urCellText];
+    // };
+    // if (document.getElementById(`cell-${locRow + 1}.${locCell - 1}`)) {
+    //     dlCellText = `cell-${locRow - 1 * -1}.${locCell - 1}`;
+    //     var dlCell = document.getElementById(dlCellText);
+    //     dlCell.innerHTML = cellVals[dlCellText];
+    // };
+    // if (document.getElementById(`cell-${locRow + 1}.${locCell + 1}`)) {
+    //     drCellText = `cell-${locRow - 1 * -1}.${locCell + 1}`;
+    //     var drCell = document.getElementById(drCellText);
+    //     drCell.innerHTML = cellVals[drCellText];
+    // };
 
     if (score === (limit - 1)) {
         restartGame();
